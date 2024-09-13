@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../image_picker.dart';
-import '../dialog/detection_dialog.dart';
+import '../../../widgets/image_picker.dart';
+import '../../../dialog/detection_dialog.dart';
 
 class UrlDetectionScreen extends StatefulWidget {
   const UrlDetectionScreen({super.key});

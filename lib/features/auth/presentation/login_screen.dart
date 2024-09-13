@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/dialog/login_dialog.dart';
-import 'package:qblock_fe/screens/url_detection_screen.dart';
+import 'package:qblock_fe/features/detect/presentation/url_detection_screen.dart';
 import 'signup_screen.dart';
-import '../auth_service.dart';
+import '../domain/auth_service.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -18,7 +18,7 @@ class _LogInScreenState extends State<LogInScreen> {
   // Placeholder method to simulate login
   bool _login(String email, String password) {
     // Replace this logic with your server request when ready
-    const hardcodedEmail = '123@test.com';
+    const hardcodedEmail = '123';
     const hardcodedPassword = 'test';
 
     if (email == hardcodedEmail && password == hardcodedPassword) {
@@ -36,7 +36,6 @@ class _LogInScreenState extends State<LogInScreen> {
       // login successful
       Navigator.pushReplacement(
         context,
-        // MaterialPageRoute(builder: (context) => const HomeScreen()),
         MaterialPageRoute(builder: (context) => const UrlDetectionScreen()),
       );
     } else {
@@ -50,14 +49,20 @@ class _LogInScreenState extends State<LogInScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 130),
+          padding: const EdgeInsets.only(top: 150),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset('assets/logo_plain.png',
-                    height: 200, fit: BoxFit.contain),
+                Transform.translate(
+                  offset: const Offset(0, -30), // Adjust this value as needed
+                  child: Image.asset(
+                    'assets/images/logo_plain.png',
+                    height: 140,
+                    fit: BoxFit.contain,
+                  ),
+                ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: _emailController,
@@ -69,8 +74,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -101,8 +105,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -142,7 +145,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // 회원가입 페이지로 이동
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -157,7 +159,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             fontSize: 14),
                       ),
                     ),
-                    const SizedBox(width: 60), // 텍스트 사이의 간격
+                    const SizedBox(width: 60),
                     GestureDetector(
                       onTap: () {
                         // 아이디/비밀번호 찾기 페이지로 이동

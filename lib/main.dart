@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/home_screen.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'features/auth/presentation/login_screen.dart';
+import 'features/home/presentation/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
+  void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await NaverMapSdk.instance.initialize(clientId: 'ub6c5z1yy9');
+    runApp(MyApp());
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -32,9 +38,10 @@ class RootScreen extends StatelessWidget {
 
     // Navigate to the appropriate screen based on the login status
     if (isLoggedIn) {
-      return const HomeScreen();
+      return HomeScreen();
     } else {
       return const LogInScreen();
     }
   }
 }
+

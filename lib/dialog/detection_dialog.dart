@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qblock_fe/screens/login_screen.dart';
+import 'package:qblock_fe/features/auth/presentation/login_screen.dart';
 
 Future<Map<String, dynamic>> fetchUrlData(String url) async {
   await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
