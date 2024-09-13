@@ -29,7 +29,12 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.debug
+            buildConfigField "String", "NAVER_MAP_CLIENT_ID", "\"ub6c5z1yy9\""
         }
+
+
+
+
     }
 }
 
