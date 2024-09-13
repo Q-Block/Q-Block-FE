@@ -60,7 +60,7 @@ class DetectionDialogs {
                         width: 120,
                         child: FilledButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF364B3B),
+                            backgroundColor: const Color(0xFF54715B),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4.0),
                             ),
@@ -143,7 +143,7 @@ class DetectionDialogs {
                         width: 120,
                         child: FilledButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF364B3B),
+                            backgroundColor: const Color(0xFF54715B),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4.0),
                             ),

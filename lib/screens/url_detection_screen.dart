@@ -38,7 +38,7 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
           CupertinoActionSheetAction(
             child: const Text(
               'Camera',
-              style: TextStyle(color: Color(0xFF364B3B)),
+              style: TextStyle(color: Color(0xFF54715B)),
             ),
             onPressed: () async {
               Navigator.of(context).pop();

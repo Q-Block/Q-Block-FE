@@ -124,7 +124,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 const SizedBox(height: 15),
                 FilledButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF364B3B),
+                    backgroundColor: const Color(0xFF54715B),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0),
                     ),
