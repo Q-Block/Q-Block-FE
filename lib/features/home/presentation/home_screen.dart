@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(
             '큐블럭님 안녕하세요!', // 나중에 API 호출로 변경될 예정
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 27,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -194,4 +194,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: HomeScreen(),
+  ));
 }
