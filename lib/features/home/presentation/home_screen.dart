@@ -14,6 +14,19 @@ class _HomeScreenState extends State<HomeScreen> {
   NaverMapController? _mapController;
 
   @override
+  void initState() {
+    super.initState();
+    _initializeNaverMap();
+  }
+
+  Future<void> _initializeNaverMap() async {
+    WidgetsFlutterBinding.ensureInitialized(); // Flutter의 엔진 초기화
+    String clientId = 'ub6c5z1yy9'; // Naver Map 클라이언트 ID 설정
+    await NaverMapSdk.instance.initialize(clientId: clientId); // NaverMap SDK 초기화
+    print("Naver Map SDK 초기화 완료");
+  }
+
+  @override
   Widget build(BuildContext context) {
     // 화면의 높이를 가져옵니다.
     double screenHeight = MediaQuery.of(context).size.height;
