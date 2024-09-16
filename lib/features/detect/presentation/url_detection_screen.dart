@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../image_picker.dart';
-import '../dialog/detection_dialog.dart';
+import '../../../widgets/image_picker.dart';
+import '../../../dialog/detection_dialog.dart';
+import '../../../widgets/navigationbar.dart'; // CustomAppBar의 경로를 확인하고 수정
 
 class UrlDetectionScreen extends StatefulWidget {
   const UrlDetectionScreen({super.key});
@@ -60,27 +61,11 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Padding(
-          padding: EdgeInsets.only(bottom: 8.0, top: 0.0),
-          child: Text(
-            '악성 URL 탐지하기',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0, // Remove shadow
-        bottom: PreferredSize(
-          preferredSize:
-              const Size.fromHeight(0.0), // Height of the bottom border
-          child: Container(
-            color: Colors.black.withOpacity(0.3), // Color of the bottom border
-            height: 0.5, // Height of the bottom border
-          ),
-        ),
-        toolbarHeight:
-            90, // Adjust toolbarHeight to reduce space above the bottom border
+      appBar: CustomAppBar(
+        title: 'URL 탐지하기',
+        onIconPressed: () {
+          Navigator.of(context).pop(); // Go back to the previous screen
+        },
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -99,7 +84,7 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
                         fillColor: const Color.fromRGBO(250, 250, 250, 0.7)
                             .withOpacity(0.2),
                         labelStyle:
-                            TextStyle(color: Colors.black.withOpacity(0.6)),
+                        TextStyle(color: Colors.black.withOpacity(0.6)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
@@ -163,3 +148,4 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
     );
   }
 }
+

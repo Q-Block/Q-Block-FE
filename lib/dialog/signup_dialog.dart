@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qblock_fe/screens/login_screen.dart';
+import 'package:qblock_fe/features/auth/presentation/login_screen.dart';
 
 class SignupDialogs {
   static void showSignupSuccessDialog(BuildContext context) {

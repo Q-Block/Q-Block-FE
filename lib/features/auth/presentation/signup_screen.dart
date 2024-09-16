@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../dialog/signup_dialog.dart';
-import 'home_screen.dart';
+import '../../../dialog/signup_dialog.dart';
+import '../../home/presentation/home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
