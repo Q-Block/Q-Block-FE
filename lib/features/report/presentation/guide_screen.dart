@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:qblock_fe/features/detect/presentation/url_detection_screen.dart';
+import 'package:qblock_fe/features/report/presentation/guide_screen2.dart';
+import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart'; // CustomAppBar의 경로를 확인하고 수정
 import '../../../widgets/textbutton.dart';
 import '../../home/presentation/home_screen.dart';
 
-class DetectInitialScreen extends StatelessWidget {
-  const DetectInitialScreen({Key? key}) : super(key: key);
+class GuideScreen extends StatelessWidget {
+  const GuideScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class DetectInitialScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: '탐지하기',
+        title: '피해 신고 가이드',
         onIconPressed: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -26,20 +27,13 @@ class DetectInitialScreen extends StatelessWidget {
       backgroundColor: Colors.white, // 배경색을 흰색으로 설정
       body: Column(
         children: [
-          // 상단 중앙에 텍스트 위치
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0), // 상하 패딩
-            child: Center(
-              child: Text(
-                '어떤 방식으로 탐지하시겠습니까?',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+          // CommonContent 위젯 사용
+          CommonContent(
+            stepNumber: 1, // 숫자만 입력
+            title: '모바일 백신으로 치료하고 악성 애플리케이션 설치 파일(APK)를 삭제하세요.',
+            subTitle: ' APK 파일은 스마트폰에 기본적으로 설치되어 있는 ‘파일관리자’, ‘내파일’ 등 파일관리 애플리케이션에서 ‘Download 폴더’를 확인하여 삭제가 가능합니다.',
           ),
-          // 버튼들을 하단에 위치시키기 위해 Spacer를 사용
+
           Spacer(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: paddingVertical), // 버튼 주변 패딩을 화면 높이의 10%로 설정
@@ -47,23 +41,11 @@ class DetectInitialScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch, // 버튼이 화면 가로폭에 맞게 확장
               children: [
                 CustomTextButton(
-                  label: '큐싱 탐지',
-                  onPressed: () {
-                    // 큐싱 탐지 버튼 클릭 시 동작을 추가
-                  },
-                  backgroundColor: Color(0xFF364B3B),
-                  pressedBackgroundColor: Colors.white,
-                  textColor: Colors.white,
-                  pressedTextColor: Colors.black,
-                  fontSize: 20,
-                ),
-                SizedBox(height: 10), // 버튼 간의 간격
-                CustomTextButton(
-                  label: 'URL 탐지',
+                  label: '다음',
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => UrlDetectionScreen(),
+                          builder: (context) => GuideScreen2()
                       ),
                     );
                   },
@@ -84,7 +66,7 @@ class DetectInitialScreen extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
-    home: DetectInitialScreen(),
+    home: GuideScreen(),
     debugShowCheckedModeBanner: false, // 디버그 배너를 숨깁니다.
   ));
 }
