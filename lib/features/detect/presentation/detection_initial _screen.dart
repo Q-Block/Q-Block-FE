@@ -8,6 +8,9 @@ class DetectInitialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 화면 높이의 10%를 패딩으로 사용하기 위해 계산
+    double paddingVertical = MediaQuery.of(context).size.height * 0.1;
+
     return Scaffold(
       appBar: CustomAppBar(
         title: '탐지하기',
@@ -38,7 +41,7 @@ class DetectInitialScreen extends StatelessWidget {
           // 버튼들을 하단에 위치시키기 위해 Spacer를 사용
           Spacer(),
           Padding(
-            padding: const EdgeInsets.all(16.0), // 버튼 주변 패딩
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: paddingVertical), // 버튼 주변 패딩을 화면 높이의 10%로 설정
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch, // 버튼이 화면 가로폭에 맞게 확장
               children: [
