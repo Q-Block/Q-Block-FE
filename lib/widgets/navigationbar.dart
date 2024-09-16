@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final VoidCallback? onBackPressed;
+  final VoidCallback? onIconPressed;
 
   const CustomAppBar({
     Key? key,
     required this.title,
-    this.onBackPressed,
+    this.onIconPressed,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+        onPressed: onIconPressed ?? () => Navigator.of(context).pop(),
       ),
       title: Padding(
         padding: const EdgeInsets.only(top: 16.0),
@@ -60,7 +60,7 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Test Title',
-        onBackPressed: () {
+        onIconPressed: () {
           // 예를 들어 다른 화면으로 이동하는 경우
           Navigator.of(context).push(
             MaterialPageRoute(

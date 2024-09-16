@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qblock_fe/features/report/presentation/guide_screen.dart';
+import '../features/detect/presentation/detection_initial _screen.dart';
 import '../features/home/presentation/home_screen.dart';
 
 const Color activeColor = Color(0xFF54715B);
@@ -43,15 +45,30 @@ class CustomBottomBar extends StatelessWidget {
     );
   }
 
-  // 아이콘 버튼 빌드
-  Widget _buildIconButton(IconData icon, String label, int index, BuildContext context) {
+// 아이콘 버튼 빌드
+  Widget _buildIconButton(IconData icon, String label, int index,
+      BuildContext context) {
     return InkWell(
       onTap: () {
-        onItemTapped(index);
-        if (index == 2) { // 홈 아이콘의 인덱스가 2일 때
-          Navigator.push(
+        onItemTapped(index); // 선택된 아이템에 대한 처리
+
+        if (index == 1) { // 홈 아이콘의 인덱스가 1일 때
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()), // 홈 화면으로 이동
+            MaterialPageRoute(builder: (context) =>
+                DetectInitialScreen()), // DetectInitialScreen으로 이동
+          );
+        } else if (index == 2) { // 홈 아이콘의 인덱스가 2일 때
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen()),
+          );
+        } else if (index == 3) { // 홈 아이콘의 인덱스가 2일 때
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => GuideScreen()),
           );
         }
       },
@@ -78,7 +95,5 @@ class CustomBottomBar extends StatelessWidget {
       ),
     );
   }
+
 }
-
-
-
