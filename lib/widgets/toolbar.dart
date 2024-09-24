@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/features/report/presentation/guide_screen.dart';
+import 'package:qblock_fe/features/user/presentation/mypage_main_screen.dart';
 import '../features/detect/presentation/detection_initial _screen.dart';
 import '../features/home/presentation/home_screen.dart';
 
@@ -55,20 +56,22 @@ class CustomBottomBar extends StatelessWidget {
         if (index == 1) { // 홈 아이콘의 인덱스가 1일 때
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) =>
-                DetectInitialScreen()), // DetectInitialScreen으로 이동
+            MaterialPageRoute(builder: (context) => DetectInitialScreen()), // DetectInitialScreen으로 이동
           );
         } else if (index == 2) { // 홈 아이콘의 인덱스가 2일 때
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => HomeScreen()), // HomeScreen으로 이동
           );
-        } else if (index == 3) { // 홈 아이콘의 인덱스가 2일 때
+        } else if (index == 3) { // 홈 아이콘의 인덱스가 3일 때
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-                builder: (context) => GuideScreen()),
+            MaterialPageRoute(builder: (context) => GuideScreen()), // GuideScreen으로 이동
+          );
+        } else if (index == 4) { // 홈 아이콘의 인덱스가 4일 때
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MypageScreen()), // NewScreen으로 이동
           );
         }
       },

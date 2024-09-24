@@ -14,10 +14,10 @@ class CustomTextButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.backgroundColor = const Color(0xFFFFFFFF),
-    this.pressedBackgroundColor = const Color(0xFF364B3B),
+    this.pressedBackgroundColor = const Color(0x3AB458),
     this.textColor = Colors.black,
     this.pressedTextColor = Colors.white,
-    this.fontSize = 22,
+    this.fontSize = 18,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class CustomTextButton extends StatelessWidget {
         )),
         shadowColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.8)), // 그림자 색상
         elevation: MaterialStateProperty.all(2), // 그림자 높이
-        padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 10)), // 버튼 안의 텍스트와 가장자리 사이의 여백
+        padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 8)), // 버튼 안의 텍스트와 가장자리 사이의 여백
       ),
       child: Text(
         label,

@@ -16,12 +16,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     double appBarHeight = screenHeight * 0.1;
 
     return AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: onIconPressed ?? () => Navigator.of(context).pop(),
+      leading: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0), // 상하 패딩 추가
+        child: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: onIconPressed ?? () => Navigator.of(context).pop(),
+        ),
       ),
       title: Padding(
-        padding: const EdgeInsets.only(top: 16.0),
+        padding: const EdgeInsets.only(top: 32.0), // 제목 위쪽 패딩
         child: Text(
           title,
           style: TextStyle(
@@ -39,17 +42,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Divider(
-            color: Colors.grey,
+            color: Colors.grey.withOpacity(0.5),
             thickness: 1,
           ),
         ),
       ),
-      toolbarHeight: appBarHeight,
+      toolbarHeight: appBarHeight + 32.0, // 전체 높이 증가
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height * 0.1);
+  Size get preferredSize => Size.fromHeight(MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height * 0.1 + 32.0); // 높이 증가
 }
 
 class TestScreen extends StatelessWidget {
