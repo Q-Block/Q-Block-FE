@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/features/report/presentation/guide_screen3.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart';
 import '../../../widgets/textbutton.dart';
 
 class GuideScreen2 extends StatelessWidget {
   const GuideScreen2({Key? key}) : super(key: key);
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
+  }
 
 
   @override
@@ -34,7 +48,7 @@ class GuideScreen2 extends StatelessWidget {
               children: [
                 CustomTextButton(
                   label: '금융 감독원으로 문의하기',
-                  onPressed: () {},
+                  onPressed: () => launchUrl(Uri.parse('https://www.fss.or.kr')),
                   backgroundColor: Color(0xFF364B3B),
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
@@ -44,7 +58,7 @@ class GuideScreen2 extends StatelessWidget {
                 SizedBox(height: 10),
                 CustomTextButton(
                   label: '금융 결제원으로 문의하기',
-                  onPressed: () {},
+                  onPressed: () => launchUrl(Uri.parse('https://www.kftc.or.kr')),
                   backgroundColor: Color(0xFF364B3B),
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
@@ -56,9 +70,7 @@ class GuideScreen2 extends StatelessWidget {
                   label: '다음',
                   onPressed: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => GuideScreen3()
-                      ),
+                      MaterialPageRoute(builder: (context) => GuideScreen3()),
                     );
                   },
                   backgroundColor: Color(0xFF364B3B),
@@ -79,7 +91,6 @@ class GuideScreen2 extends StatelessWidget {
                   pressedTextColor: Colors.black,
                   fontSize: 20,
                 ),
-
               ],
             ),
           ),

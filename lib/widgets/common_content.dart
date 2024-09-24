@@ -23,7 +23,7 @@ class CommonContent extends StatelessWidget {
           Text(
             'Step $stepNumber', // 숫자를 "Step {숫자}" 형태로 변환
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.w500,
               color: Colors.grey[700],
             ),
@@ -33,7 +33,7 @@ class CommonContent extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 23,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -45,7 +45,7 @@ class CommonContent extends StatelessWidget {
               child: Text(
                 subTitle!,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: Colors.grey[600],
                 ),

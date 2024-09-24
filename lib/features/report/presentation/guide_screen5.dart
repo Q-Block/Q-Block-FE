@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/features/report/presentation/guide_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart';
 import '../../../widgets/textbutton.dart';
 
 class GuideScreen5 extends StatelessWidget {
   const GuideScreen5({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,10 @@ class GuideScreen5 extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-
                 SizedBox(height: 10),
                 CustomTextButton(
                   label: '118 상담 전화',
-                  onPressed: () {},
+                  onPressed: () => launchUrl(Uri( scheme: 'tel', path: '118',)), // 118 번호로 전화걸기
                   backgroundColor: Color(0xFF364B3B),
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
@@ -46,7 +45,7 @@ class GuideScreen5 extends StatelessWidget {
                 SizedBox(height: 10),
                 CustomTextButton(
                   label: '112 신고 접수',
-                  onPressed: () {},
+                  onPressed: () => launchUrl(Uri( scheme: 'tel', path: '112',)), // 112 번호로 전화걸기
                   backgroundColor: Color(0xFF364B3B),
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
@@ -58,9 +57,7 @@ class GuideScreen5 extends StatelessWidget {
                   label: '처음으로 돌아가기',
                   onPressed: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => GuideScreen()
-                      ),
+                      MaterialPageRoute(builder: (context) => GuideScreen()),
                     );
                   },
                   backgroundColor: Colors.white,

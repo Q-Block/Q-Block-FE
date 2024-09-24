@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SizedBox(
-              height: 350.0, // 여기를 조정하여 지도 크기를 설정합니다.
+              height: 300.0, // 여기를 조정하여 지도 크기를 설정합니다.
               child: Container(
                 child: NaverMap(
                   options: NaverMapViewOptions(
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         '큐싱 다발 지역 Top 3 🔥',
                         style: TextStyle(
-                          fontSize: 23,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
