@@ -34,7 +34,7 @@ class GuideScreen4 extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
 
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '다음',
                   onPressed: () {
@@ -48,9 +48,8 @@ class GuideScreen4 extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '이전',
                   onPressed: () {
@@ -60,7 +59,6 @@ class GuideScreen4 extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.black,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/features/report/presentation/guide_screen2.dart';
+import 'package:qblock_fe/features/user/presentation/profile_edit_screen.dart';
 import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart'; // CustomAppBar의 경로를 확인하고 수정
 import '../../../widgets/textbutton.dart';
@@ -160,7 +161,11 @@ class MypageScreen extends StatelessWidget {
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 0),
                     onTap: () {
-                      // 닉네임 변경 처리
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProfileEditScreen(), // 닉네임 변경 화면으로 이동
+                        ),
+                      );
                     },
                   ),
                 ],

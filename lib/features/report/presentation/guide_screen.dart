@@ -53,7 +53,6 @@ class GuideScreen extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
               ],
             ),

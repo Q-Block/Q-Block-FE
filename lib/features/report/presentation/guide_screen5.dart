@@ -32,7 +32,7 @@ class GuideScreen5 extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '118 상담 전화',
                   onPressed: () => launchUrl(Uri( scheme: 'tel', path: '118',)), // 118 번호로 전화걸기
@@ -40,9 +40,8 @@ class GuideScreen5 extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '112 신고 접수',
                   onPressed: () => launchUrl(Uri( scheme: 'tel', path: '112',)), // 112 번호로 전화걸기
@@ -50,9 +49,8 @@ class GuideScreen5 extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '처음으로 돌아가기',
                   onPressed: () {
@@ -64,7 +62,6 @@ class GuideScreen5 extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.black,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
               ],
             ),

@@ -40,8 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(
             '큐블럭님 안녕하세요!', // 나중에 API 호출로 변경될 예정
             style: TextStyle(
-              fontSize: 27,
-              fontWeight: FontWeight.bold,
+              fontSize: 23,
+              fontWeight: FontWeight.w500,
               color: Colors.black,
             ),
           ),
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         '큐싱 다발 지역 Top 3 🔥',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     number,
                     style: TextStyle(
-                      fontSize: 20, // 숫자 크기 조절
+                      fontSize: 18, // 숫자 크기 조절
                       color: iconColor,
                       fontWeight: FontWeight.bold, // 숫자를 굵게
                     ),
@@ -186,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       address,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       name,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 13,
                         color: Colors.black,
                       ),
                     ),
