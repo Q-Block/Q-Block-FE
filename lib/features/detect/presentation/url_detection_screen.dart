@@ -122,7 +122,7 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
                 width: double.infinity,
                 child: FilledButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF364B3B),
+                    backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0),
                     ),

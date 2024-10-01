@@ -58,7 +58,7 @@ class DetectInitialScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
@@ -73,7 +73,7 @@ class DetectInitialScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,

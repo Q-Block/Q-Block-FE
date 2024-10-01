@@ -36,7 +36,7 @@ class GuideScreen5 extends StatelessWidget {
                 CustomTextButton(
                   label: '118 상담 전화',
                   onPressed: () => launchUrl(Uri( scheme: 'tel', path: '118',)), // 118 번호로 전화걸기
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
@@ -45,7 +45,7 @@ class GuideScreen5 extends StatelessWidget {
                 CustomTextButton(
                   label: '112 신고 접수',
                   onPressed: () => launchUrl(Uri( scheme: 'tel', path: '112',)), // 112 번호로 전화걸기
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,

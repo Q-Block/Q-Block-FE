@@ -40,7 +40,7 @@ class MypageScreen extends StatelessWidget {
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFF364B3B),
+                        backgroundColor: Colors.green,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8), // 둥글기 조정
                         ),

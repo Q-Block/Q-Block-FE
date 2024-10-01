@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             '큐블럭님 안녕하세요!', // 나중에 API 호출로 변경될 예정
             style: TextStyle(
               fontSize: 23,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
           ),
