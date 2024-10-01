@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/dialog/login_dialog.dart';
 import 'package:qblock_fe/features/detect/presentation/url_detection_screen.dart';
+import 'package:qblock_fe/features/home/presentation/home_screen.dart';
 import 'signup_screen.dart';
 import '../domain/auth_service.dart';
 
@@ -36,13 +37,58 @@ class _LogInScreenState extends State<LogInScreen> {
       // login successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const UrlDetectionScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
       LoginDialogs.showLoginErrorDialog(context);
     }
   }
 
+/*
+class _LogInScreenState extends State<LogInScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<bool> _login(String email, String password) async {
+    // Use AuthService to log in
+    final token = await _authService.login(email, password);
+
+    if (token != null) {
+      // You can store the token if needed, e.g., using shared preferences
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void _onLoginPressed() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      LoginDialogs.showLoginErrorDialog(context);
+      return;
+    }
+
+    bool loginSuccess = await _login(email, password);
+    if (loginSuccess) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const UrlDetectionScreen()),
+      );
+    } else {
+      LoginDialogs.showLoginErrorDialog(context);
+    }
+  }
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +120,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -105,7 +152,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -127,7 +175,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 const SizedBox(height: 15),
                 FilledButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF54715B),
+                    backgroundColor: Colors.green, //const Color(0xFF54715B),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0),
                     ),
