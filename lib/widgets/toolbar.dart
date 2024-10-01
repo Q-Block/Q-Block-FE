@@ -3,8 +3,9 @@ import 'package:qblock_fe/features/report/presentation/guide_screen.dart';
 import 'package:qblock_fe/features/user/presentation/mypage_main_screen.dart';
 import '../features/detect/presentation/detection_initial _screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/record/presentation/record_screeen.dart';
 
-const Color activeColor = Color(0xFF54715B);
+const Color activeColor = Colors.green;
 const Color bottomAppBarColor = Colors.white; // 흰색 배경
 
 class CustomBottomBar extends StatelessWidget {
@@ -53,7 +54,13 @@ class CustomBottomBar extends StatelessWidget {
       onTap: () {
         onItemTapped(index); // 선택된 아이템에 대한 처리
 
-        if (index == 1) { // 홈 아이콘의 인덱스가 1일 때
+        if (index == 0) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => RecordScreen()), // DetectInitialScreen으로 이동
+          );
+        }
+        else if (index == 1) { // 홈 아이콘의 인덱스가 1일 때
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => DetectInitialScreen()), // DetectInitialScreen으로 이동

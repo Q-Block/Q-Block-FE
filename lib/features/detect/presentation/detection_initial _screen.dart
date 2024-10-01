@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:qblock_fe/features/detect/presentation/qr_detection_screen.dart';
 import 'package:qblock_fe/features/detect/presentation/url_detection_screen.dart';
 import '../../../widgets/navigationbar.dart'; // CustomAppBar의 경로를 확인하고 수정
 import '../../../widgets/textbutton.dart';
@@ -33,7 +36,7 @@ class DetectInitialScreen extends StatelessWidget {
               child: Text(
                 '어떤 방식으로 탐지하시겠습니까?',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.black,
                 ),
               ),
@@ -49,15 +52,18 @@ class DetectInitialScreen extends StatelessWidget {
                 CustomTextButton(
                   label: '큐싱 탐지',
                   onPressed: () {
-                    // 큐싱 탐지 버튼 클릭 시 동작을 추가
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => QrDetectionScreen(), // QR 코드 스캔 화면으로 이동
+                      ),
+                    );
                   },
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
-                SizedBox(height: 10), // 버튼 간의 간격
+                SizedBox(height: 3), // 버튼 간의 간격
                 CustomTextButton(
                   label: 'URL 탐지',
                   onPressed: () {
@@ -67,11 +73,10 @@ class DetectInitialScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
               ],
             ),

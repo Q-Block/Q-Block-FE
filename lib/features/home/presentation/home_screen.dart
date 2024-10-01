@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: const Text(
             '큐블럭님 안녕하세요!',
             style: TextStyle(
-              fontSize: 27,
-              fontWeight: FontWeight.bold,
+              fontSize: 23,
+              fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
           ),
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         '큐싱 다발 지역 Top 3 🔥',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),

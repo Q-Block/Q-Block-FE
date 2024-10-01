@@ -49,23 +49,22 @@ class GuideScreen2 extends StatelessWidget {
                 CustomTextButton(
                   label: '금융 감독원으로 문의하기',
                   onPressed: () => launchUrl(Uri.parse('https://www.fss.or.kr')),
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
+
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '금융 결제원으로 문의하기',
                   onPressed: () => launchUrl(Uri.parse('https://www.kftc.or.kr')),
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '다음',
                   onPressed: () {
@@ -73,13 +72,12 @@ class GuideScreen2 extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => GuideScreen3()),
                     );
                   },
-                  backgroundColor: Color(0xFF364B3B),
+                  backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 3),
                 CustomTextButton(
                   label: '이전',
                   onPressed: () {
@@ -89,7 +87,6 @@ class GuideScreen2 extends StatelessWidget {
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.black,
                   pressedTextColor: Colors.black,
-                  fontSize: 20,
                 ),
               ],
             ),
