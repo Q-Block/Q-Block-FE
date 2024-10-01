@@ -73,7 +73,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 }
                     : null, // 비활성화 상태일 때 클릭 불가
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isButtonEnabled ? Color(0xFF364B3B) : Colors.grey, // 활성화 상태에 따른 색상 변경
+                  backgroundColor: _isButtonEnabled ? Colors.green : Colors.grey, // 활성화 상태에 따른 색상 변경
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4), // 모서리를 덜 둥글게 설정
                   ),

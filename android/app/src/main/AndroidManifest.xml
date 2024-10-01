@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.qblock_fe">
 
     <!-- 필수 권한 설정 -->
@@ -7,11 +8,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/> <!-- 전화 권한 추가 -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:label="qblock_fe"
-        android:icon="@mipmap/ic_launcher"
-        android:theme="@style/LaunchTheme">
+        android:theme="@style/LaunchTheme"
+        tools:replace="android:theme"
+        android:enableOnBackInvokedCallback="true">
 
         <!-- 네이버 맵 SDK 클라이언트 ID 설정 -->
         <meta-data
@@ -21,12 +24,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:taskAffinity=""
-            android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <!-- Flutter의 기본 테마 설정 -->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
@@ -47,11 +45,11 @@
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="tel" />
+            <data />
         </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
+            <data />
         </intent>
         <package android:name="com.android.chrome"/> <!-- Chrome 지원 -->
         <package android:name="com.android.browser"/> <!-- 기본 브라우저 지원 -->

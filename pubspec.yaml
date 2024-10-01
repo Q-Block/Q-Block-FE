@@ -34,6 +34,9 @@ dependencies:
   flutter_naver_map: ^1.2.3+1
   geolocator: ^9.0.1
   url_launcher: ^6.3.0
+  qr_flutter: ^4.0.0
+  flutter_barcode_scanner: ^2.0.0
+  qr: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -72,6 +75,8 @@ flutter:
     - assets/images/logo_splashscreen.png
     - assets/images/logo_removebg.png
     - assets/images/logo_plain.png
+    - assets/images/record_qr.png
+    - assets/images/record_url.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
