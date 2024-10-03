@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart'; 
 import '../../../widgets/image_picker.dart';
 import '../../../dialog/detection_dialog.dart';
-import '../../../widgets/navigationbar.dart'; // CustomAppBar의 경로를 확인하고 수정
+import '../../../widgets/navigationbar.dart';
 
 class UrlDetectionScreen extends StatefulWidget {
   const UrlDetectionScreen({super.key});
@@ -16,6 +17,55 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
   File? _image;
   final TextEditingController _textController = TextEditingController();
   final ImagePickerUtil _imagePickerUtil = ImagePickerUtil();
+  final TextRecognizer _textRecognizer = TextRecognizer(); // 텍스트 인식기
+
+  // URL 추출을 위한 정규식 패턴
+  final String urlPattern = r'(https?:\/\/[^\s]+)';
+
+  // 이미지를 선택한 후 텍스트 인식 (OCR) 실행 및 URL만 추출
+  Future<void> _processImageForTextRecognition(File image) async {
+    try {
+      final inputImage = InputImage.fromFile(image);
+      final RecognizedText recognizedText = await _textRecognizer.processImage(inputImage);
+
+      // 인식된 텍스트가 존재하는지 확인
+      if (recognizedText.text.isNotEmpty) {
+        print("인식된 텍스트: ${recognizedText.text}"); // 콘솔에 출력
+
+        // URL을 추출하는 기존 코드
+        final RegExp regExp = RegExp(urlPattern);
+        final Iterable<RegExpMatch> matches = regExp.allMatches(recognizedText.text);
+
+        if (matches.isNotEmpty) {
+          final List<String> urls = matches.map((match) => match.group(0) ?? '').toList();
+          setState(() {
+            _textController.text = urls.isNotEmpty ? urls.first : '';
+          });
+        } else {
+          if (mounted) {  // mounted 체크 추가
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("URL을 인식하지 못했습니다.")),
+            );
+          }
+        }
+      } else {
+        if (mounted) {  // mounted 체크 추가
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("텍스트를 인식하지 못했습니다.")),
+          );
+        }
+      }
+    } catch (e) {
+      print("텍스트 인식 오류: $e");
+      if (mounted) {  // mounted 체크 추가
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("텍스트 인식 중 오류가 발생했습니다.")),
+        );
+      }
+    }
+  }
+
+
 
   Future<void> showImagePickerOptions() async {
     showCupertinoModalPopup(
@@ -33,6 +83,7 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
                   _image = image;
                   _textController.text = _image!.path.split('/').last;
                 });
+                await _processImageForTextRecognition(image); // 이미지 처리 및 URL 인식
               }
             },
           ),
@@ -49,12 +100,19 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
                   _image = image;
                   _textController.text = _image!.path.split('/').last;
                 });
+                await _processImageForTextRecognition(image); // 이미지 처리 및 URL 인식
               }
             },
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _textRecognizer.close(); // 텍스트 인식기 해제
+    super.dispose();
   }
 
   @override
@@ -148,4 +206,3 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
     );
   }
 }
-
