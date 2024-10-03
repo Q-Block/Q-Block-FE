@@ -43,7 +43,7 @@ class GuideScreen extends StatelessWidget {
                 CustomTextButton(
                   label: '다음',
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context) => GuideScreen2()
                       ),

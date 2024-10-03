@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qblock_fe/dialog/login_dialog.dart';
 import 'package:qblock_fe/features/detect/presentation/url_detection_screen.dart';
 import 'package:qblock_fe/features/home/presentation/home_screen.dart';
+import '../../../widgets/auth_dialog.dart';
 import 'signup_screen.dart';
 import '../domain/auth_service.dart';
 
@@ -13,6 +13,7 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  // Controllers for text fields
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -22,11 +23,7 @@ class _LogInScreenState extends State<LogInScreen> {
     const hardcodedEmail = '123';
     const hardcodedPassword = 'test';
 
-    if (email == hardcodedEmail && password == hardcodedPassword) {
-      return true; // Simulate successful login
-    } else {
-      return false; // Simulate login failure
-    }
+    return email == hardcodedEmail && password == hardcodedPassword;
   }
 
   void _onLoginPressed() {
@@ -34,61 +31,28 @@ class _LogInScreenState extends State<LogInScreen> {
     final password = _passwordController.text;
 
     if (_login(email, password)) {
-      // login successful
+      // Login successful
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
-      LoginDialogs.showLoginErrorDialog(context);
-    }
-  }
+      // Show AuthDialog for login error
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AuthDialog(
+            title: '로그인 오류',
+            content: '아이디 또는 비밀번호가 올바르지 않습니다.',
+            onConfirm: () {
 
-/*
-class _LogInScreenState extends State<LogInScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  Future<bool> _login(String email, String password) async {
-    // Use AuthService to log in
-    final token = await _authService.login(email, password);
-
-    if (token != null) {
-      // You can store the token if needed, e.g., using shared preferences
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void _onLoginPressed() async {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-
-    if (email.isEmpty || password.isEmpty) {
-      LoginDialogs.showLoginErrorDialog(context);
-      return;
-    }
-
-    bool loginSuccess = await _login(email, password);
-    if (loginSuccess) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const UrlDetectionScreen()),
+            },
+          );
+        },
       );
-    } else {
-      LoginDialogs.showLoginErrorDialog(context);
     }
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,8 +84,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -152,8 +115,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -175,7 +137,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 const SizedBox(height: 15),
                 FilledButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, //const Color(0xFF54715B),
+                    backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0),
                     ),
@@ -195,8 +157,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignupScreen()),
+                          MaterialPageRoute(builder: (context) => const SignupScreen()),
                         );
                       },
                       child: const Text(

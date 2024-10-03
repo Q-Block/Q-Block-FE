@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: Padding(
-        padding: const EdgeInsets.only(top: 32.0), // 제목 위쪽 패딩
+        padding: const EdgeInsets.only(top: 16.0), // 제목 위쪽 패딩
         child: Text(
           title,
           style: TextStyle(

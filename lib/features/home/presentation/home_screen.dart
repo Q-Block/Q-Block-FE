@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           // NaverMap을 크기가 설정된 SizedBox로 감싸기
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
             child: SizedBox(
-              height: 300.0, // 여기를 조정하여 지도 크기를 설정합니다.
+              height: 290.0, // 여기를 조정하여 지도 크기를 설정합니다.
               child: NaverMapWidget(
                 onMapReady: (controller) {
                   setState(() {
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // 스크롤 가능한 영역으로 텍스트와 카드들 감싸기
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0), // 전체 요소에 상하좌우 16 패딩 추가
+              padding: const EdgeInsets.only(top: 6, left: 16.0, right: 16.0, bottom: 16.0), // 전체 요소에 상하좌우 16 패딩 추가
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

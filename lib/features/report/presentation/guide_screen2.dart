@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart';
 import '../../../widgets/textbutton.dart';
+import 'guide_screen.dart';
 
 class GuideScreen2 extends StatelessWidget {
   const GuideScreen2({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class GuideScreen2 extends StatelessWidget {
                 CustomTextButton(
                   label: '다음',
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => GuideScreen3()),
                     );
                   },
@@ -81,7 +82,9 @@ class GuideScreen2 extends StatelessWidget {
                 CustomTextButton(
                   label: '이전',
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => GuideScreen()),
+                    );
                   },
                   backgroundColor: Colors.white,
                   pressedBackgroundColor: Colors.white,

@@ -3,6 +3,7 @@ import 'package:qblock_fe/features/report/presentation/guide_screen4.dart';
 import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart';
 import '../../../widgets/textbutton.dart';
+import 'guide_screen2.dart';
 
 class GuideScreen3 extends StatelessWidget {
   const GuideScreen3({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class GuideScreen3 extends StatelessWidget {
                 CustomTextButton(
                   label: '다음',
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context) => GuideScreen4()
                       ),
@@ -52,7 +53,9 @@ class GuideScreen3 extends StatelessWidget {
                 CustomTextButton(
                   label: '이전',
                   onPressed: () {
-                      Navigator.of(context).pop(); // Go back to the previous screen
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => GuideScreen2()),
+                    ); // Go back to the previous screen
                   },
                   backgroundColor: Colors.white,
                   pressedBackgroundColor: Colors.white,

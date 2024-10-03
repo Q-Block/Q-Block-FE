@@ -107,11 +107,11 @@ class MypageScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 40),
-                  Divider(
-                    thickness: 1,
-                    color: Colors.grey.withOpacity(0.5),
-                  ),
+                  SizedBox(height: 50),
+                  // Divider(
+                  //   thickness: 1,
+                  //   color: Colors.grey.withOpacity(0.5),
+                  // ),
                   SizedBox(height: 8),
                   Align(
                     alignment: Alignment.centerLeft,

@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart'; 
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import '../../../widgets/detection_dialog.dart';
 import '../../../widgets/image_picker.dart';
-import '../../../dialog/detection_dialog.dart';
 import '../../../widgets/navigationbar.dart';
 
 class UrlDetectionScreen extends StatefulWidget {

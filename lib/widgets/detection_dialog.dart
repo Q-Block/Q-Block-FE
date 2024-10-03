@@ -1,0 +1,181 @@
+import 'package:flutter/material.dart';
+
+Future<Map<String, dynamic>> fetchUrlData(String url) async {
+  await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
+
+  // Simulate a response
+  bool isMalicious = url.contains("malicious");
+
+  return {
+    'url': url,
+    'isMalicious': true, // Update to use the simulated value
+  };
+}
+
+class DetectionDialogs {
+  static void showDetectionDialog(BuildContext context, String url) async {
+    try {
+      Map<String, dynamic> urlData = await fetchUrlData(url);
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          bool isMalicious = urlData['isMalicious'] ?? false;
+          String message = isMalicious ? "악성 URL로 의심됩니다" : "악성 URL이 아닙니다";
+
+          return AlertDialog(
+            title: Text(
+              'URL 탐지 결과',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+              mainAxisSize: MainAxisSize.min, // Column의 크기를 최소로 설정
+              children: [
+                const SizedBox(height: 10),
+                Text(
+                  'URL: $url',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 16), // 버튼 위쪽 간격 추가
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showConnectionWarningDialog(
+                              context, isMalicious, url);
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // 둥글기 조정
+                          ),
+                        ),
+                        child: Text('접속하기'),
+                      ),
+                    ),
+                    SizedBox(height: 8), // 버튼 간격
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // 다이얼로그 닫기
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // 둥글기 조정
+                          ),
+                        ),
+                        child: Text('닫기'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Handle the error here (e.g., show an error dialog)
+      print('Error: $e');
+    }
+  }
+
+  static void showConnectionWarningDialog(BuildContext context,
+      bool isMalicious, String url) async {
+    try {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              '정말 접속하시겠습니까?',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+              mainAxisSize: MainAxisSize.min, // Column의 크기를 최소로 설정
+              children: [
+                const SizedBox(height: 10),
+                if (isMalicious)
+                  Text(
+                    '$url 은\n악성 URL로 의심됩니다.',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                const SizedBox(height: 10),
+              ],
+            ),
+            actions: [
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 16), // 버튼 위쪽 간격 추가
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showConnectionWarningDialog(
+                              context, isMalicious, url);
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // 둥글기 조정
+                          ),
+                        ),
+                        child: Text('접속하기'),
+                      ),
+                    ),
+                    SizedBox(height: 8), // 버튼 간격
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // 다이얼로그 닫기
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // 둥글기 조정
+                          ),
+                        ),
+                        child: Text('닫기'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // 오류 처리
+      print('Error: $e');
+    }
+  }
+}
