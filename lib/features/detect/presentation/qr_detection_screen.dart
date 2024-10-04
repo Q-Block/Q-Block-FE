@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qblock_fe/widgets/detection_dialog_qr.dart';
+import 'package:qblock_fe/widgets/navigationbar.dart';
 import 'package:qblock_fe/widgets/textbutton.dart';
 
 class QrDetectionScreen extends StatefulWidget {
@@ -13,6 +15,7 @@ class QrDetectionScreen extends StatefulWidget {
 
 class _ScanQRCodeState extends State<QrDetectionScreen> {
   String qrResult = 'Scanned Data will appear here';
+  final TextEditingController urlController = TextEditingController();
 
   Future<bool> checkCameraPermission() async {
     var status = await Permission.camera.status;
@@ -41,17 +44,22 @@ class _ScanQRCodeState extends State<QrDetectionScreen> {
       setState(() {
         if (qrCode == '-1') {
           qrResult = 'Scan cancelled';
+          urlController.text = ''; // Clear the TextField if scan is cancelled
         } else {
           qrResult = qrCode;
+          urlController.text =
+              qrCode; // Update the TextEditingController to show the scanned result
         }
       });
     } on PlatformException catch (e) {
       setState(() {
         qrResult = 'Failed to scan QR Code: ${e.message}';
+        urlController.text = ''; // Clear the TextField on error
       });
     } catch (e) {
       setState(() {
         qrResult = 'An error occurred: $e';
+        urlController.text = ''; // Clear the TextField on error
       });
     }
   }
@@ -66,45 +74,69 @@ class _ScanQRCodeState extends State<QrDetectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('QR Code Scanner'),
-        backgroundColor: Colors.white,
-      ),
       backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 30),
-            Text(
-              '$qrResult',
-              style: const TextStyle(color: Colors.black, fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 30),
-            CustomTextButton(
-              label: ' 탐지하기  ',
-              onPressed: scanQR,
-              backgroundColor: Colors.green,
-              pressedBackgroundColor: Colors.white,
-              textColor: Colors.white,
-              pressedTextColor: Colors.black,
-            ),
-            if (qrResult.startsWith('http') ||
-                qrResult.startsWith('www') ||
-                qrResult.startsWith('https'))
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
+      appBar: CustomAppBar(
+        title: '큐싱 탐지하기',
+        onIconPressed: () {
+          Navigator.of(context).pop(); // Go back to the previous screen
+        },
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 150.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Wrap the TextField in a Container with specified width
+
+              Container(
+                width: double.infinity, // Set the desired width
+                child: TextField(
+                  controller: urlController,
+                  readOnly: true, // Make the TextField read-only
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Detected URL',
+                      hintText: 'URL will appear here'),
+                ),
+              ),
+
+              SizedBox(height: 8),
+
+              SizedBox(
+                width: double.infinity, // Set the desired width
                 child: CustomTextButton(
-                  label: '  접속하기  ',
-                  onPressed: () => openLink(qrResult),
+                  label: ' 탐지하기  ',
+                  onPressed: scanQR,
                   backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,
                   textColor: Colors.white,
                   pressedTextColor: Colors.black,
                 ),
               ),
-          ],
+              if (qrResult.startsWith('http') ||
+                  qrResult.startsWith('www') ||
+                  qrResult.startsWith('https'))
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 0.0, right: 0.0, top: 8.0),
+                  child: SizedBox(
+                    width: double.infinity, // Set the desired width
+                    child: CustomTextButton(
+                      label: '  접속하기  ',
+                      onPressed: () {
+                        DetectionDialogs.showDetectionDialog(
+                            context, qrResult, scanQR);
+                      },
+                      backgroundColor: Colors.green,
+                      pressedBackgroundColor: Colors.white,
+                      textColor: Colors.white,
+                      pressedTextColor: Colors.black,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
