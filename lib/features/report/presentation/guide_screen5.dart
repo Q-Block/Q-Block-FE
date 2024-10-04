@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qblock_fe/features/report/presentation/guide_screen.dart';
+import 'package:qblock_fe/features/report/presentation/guide_screen4.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../widgets/common_content.dart';
 import '../../../widgets/navigationbar.dart';
@@ -16,7 +17,9 @@ class GuideScreen5 extends StatelessWidget {
       appBar: CustomAppBar(
         title: '피해 신고 가이드',
         onIconPressed: () {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => GuideScreen4()),
+          );
         },
       ),
       backgroundColor: Colors.white,
