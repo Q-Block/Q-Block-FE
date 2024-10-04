@@ -6,9 +6,60 @@ import '../../../widgets/navigationbar.dart'; // CustomAppBar의 경로를 확�
 import '../../../widgets/textbutton.dart';
 import '../../home/presentation/home_screen.dart';
 import '../../auth/presentation/login_screen.dart'; // LogInScreen 임포트
+import '../domain/userInfo_service.dart';
+import '../domain/logout_service.dart'; // LogoutService 임포트 추가
 
-class MypageScreen extends StatelessWidget {
+class MypageScreen extends StatefulWidget {
   const MypageScreen({Key? key}) : super(key: key);
+
+  @override
+  _MypageScreenState createState() => _MypageScreenState();
+}
+
+class _MypageScreenState extends State<MypageScreen> {
+  String nickname = '';
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserInfo(); // 사용자 정보 가져오기
+  }
+
+  Future<void> _getUserInfo() async {
+    UserInfoService userInfoService = UserInfoService();
+    final userInfo = await userInfoService.fetchUserInfo();
+
+    if (userInfo != null) {
+      setState(() {
+        nickname = userInfo['nickname']; // 닉네임 설정
+        isLoading = false; // 로딩 완료
+      });
+    } else {
+      setState(() {
+        isLoading = false; // 로딩 완료 (실패 시)
+      });
+      print('UserInfo is null.'); // 추가된 에러 로그
+    }
+  }
+
+  Future<void> _logout() async {
+    LogoutService logoutService = LogoutService();
+    try {
+      final response = await logoutService.logout();
+      if (response['isSuccess']) {
+        // 로그아웃 성공 시
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => LogInScreen(), // 로그아웃 후 LogInScreen으로 이동
+          ),
+        );
+      }
+    } catch (error) {
+      print('Logout error: $error');
+      // 여기서 에러 처리 로직 추가 가능
+    }
+  }
 
   void _showLogoutDialog(BuildContext context) {
     showDialog(
@@ -32,11 +83,7 @@ class MypageScreen extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).pop(); // 다이얼로그 닫기
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => LogInScreen(), // 로그아웃 후 LogInScreen으로 이동
-                          ),
-                        );
+                        _logout(); // 로그아웃 호출
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -89,7 +136,9 @@ class MypageScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
+        child: isLoading // 로딩 상태에 따른 UI 변경
+            ? Center(child: CircularProgressIndicator())
+            : Column(
           children: [
             SizedBox(height: 40),
             Align(
@@ -103,15 +152,11 @@ class MypageScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '큐블럭 님',
+                    nickname.isNotEmpty ? '$nickname 님' : '사용자 님',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 50),
-                  // Divider(
-                  //   thickness: 1,
-                  //   color: Colors.grey.withOpacity(0.5),
-                  // ),
                   SizedBox(height: 8),
                   Align(
                     alignment: Alignment.centerLeft,
