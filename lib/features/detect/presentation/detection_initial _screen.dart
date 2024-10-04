@@ -45,16 +45,20 @@ class DetectInitialScreen extends StatelessWidget {
           // 버튼들을 하단에 위치시키기 위해 Spacer를 사용
           Spacer(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: paddingVertical), // 버튼 주변 패딩을 화면 높이의 10%로 설정
+            padding: EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: paddingVertical), // 버튼 주변 패딩을 화면 높이의 10%로 설정
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch, // 버튼이 화면 가로폭에 맞게 확장
+              crossAxisAlignment:
+                  CrossAxisAlignment.stretch, // 버튼이 화면 가로폭에 맞게 확장
               children: [
                 CustomTextButton(
                   label: '큐싱 탐지',
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => QrDetectionScreen(), // QR 코드 스캔 화면으로 이동
+                        builder: (context) =>
+                            QrDetectionScreen(), // QR 코드 스캔 화면으로 이동
                       ),
                     );
                   },

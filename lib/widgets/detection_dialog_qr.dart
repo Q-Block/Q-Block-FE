@@ -14,7 +14,8 @@ Future<Map<String, dynamic>> fetchUrlData(String url) async {
 }
 
 class DetectionDialogs {
-  static void showDetectionDialog(BuildContext context, String url) async {
+  static void showDetectionDialog(
+      BuildContext context, String url, VoidCallback onScanAgain) async {
     try {
       Map<String, dynamic> urlData = await fetchUrlData(url);
 
@@ -26,7 +27,7 @@ class DetectionDialogs {
 
           return AlertDialog(
             title: Text(
-              'URL 탐지 결과',
+              '큐싱 탐지 결과',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             content: Column(
@@ -59,9 +60,15 @@ class DetectionDialogs {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
-                          showConnectionWarningDialog(
-                              context, isMalicious, url);
+                          if (isMalicious) {
+                            // Show the connection warning dialog if the URL is malicious
+                            Navigator.pop(context); // Close the current dialog
+                            showConnectionWarningDialog(
+                                context, isMalicious, url);
+                          } else {
+                            // Launch the URL directly if it is not malicious
+                            launchUrlIfPossible(url);
+                          }
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -78,15 +85,24 @@ class DetectionDialogs {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          if (isMalicious) {
-                            // Show the connection warning dialog if the URL is malicious
-                            Navigator.pop(context); // Close the current dialog
-                            showConnectionWarningDialog(
-                                context, isMalicious, url);
-                          } else {
-                            // Launch the URL directly if it is not malicious
-                            DetectionDialogs.launchUrlIfPossible(url);
-                          }
+                          Navigator.pop(context);
+                          onScanAgain(); // Call the scan again function here
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // 둥글기 조정
+                          ),
+                        ),
+                        child: Text('재탐지하기'),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -183,7 +199,7 @@ class DetectionDialogs {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop(); // 다이얼로그 닫기
+                          Navigator.of(context).pop();
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -191,7 +207,7 @@ class DetectionDialogs {
                             borderRadius: BorderRadius.circular(8), // 둥글기 조정
                           ),
                         ),
-                        child: Text('닫기'),
+                        child: Text('재탐지하기'),
                       ),
                     ),
                   ],
