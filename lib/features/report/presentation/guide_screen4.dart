@@ -17,7 +17,9 @@ class GuideScreen4 extends StatelessWidget {
       appBar: CustomAppBar(
         title: '피해 신고 가이드',
         onIconPressed: () {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => GuideScreen3()),
+          );
         },
       ),
       backgroundColor: Colors.white,
