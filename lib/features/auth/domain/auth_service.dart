@@ -13,55 +13,79 @@ class AuthService {
   }
 }
 */
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class AuthService {
-  final String baseUrl = 'http://localhost:3000'; // Your backend URL
+import 'package:shared_preferences/shared_preferences.dart';
 
-  Future<String?> login(String email, String password) async {
-    final url = Uri.parse('$baseUrl/api/auth/login');
+class AuthService {
+  final String? baseUrl = dotenv.env['baseURL'];
+
+  Future<bool> login(String email, String password) async {
+    final url = Uri.parse('$baseUrl/auth/login');
+
     final response = await http.post(
       url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode({
         'email': email,
         'password': password,
       }),
     );
 
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data['token']; // Return the token from the response
+      final responseData = jsonDecode(response.body);
+
+      if (responseData['isSuccess']) {
+        final accessToken = responseData['result']['refreshToken'];
+        print('Login successful, token: $accessToken');
+
+        // Save the token to shared preferences
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('accessToken', accessToken);
+
+        print('Token saved to client.');
+        return true; // Login was successful
+      } else {
+        print('Login failed: ${responseData['message']}');
+        return false; // Login failed
+      }
     } else {
-      // Handle error response
-      return null;
+      print('Error during login: ${response.statusCode} ${response.body}');
+      return false; // Error occurred
     }
   }
 
-  Future<String?> register(String username, String email, String password,
-      [String? profileImg]) async {
+// To retrieve the saved token later
+  Future<String?> getAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('accessToken');
+  }
+
+  Future<void> signUp(String email, String password, String nickname) async {
     final url = Uri.parse('$baseUrl/auth/signup');
+
     final response = await http.post(
       url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, dynamic>{
-        'username': username,
+      body: jsonEncode({
         'email': email,
         'password': password,
-        'profile_img': profileImg,
+        'nickname': nickname,
       }),
     );
 
     if (response.statusCode == 201) {
-      return 'User registered successfully';
+      // Handle successful signup
+      print('Signup successful: ${response.body}');
     } else {
-      // Handle error response
-      return null;
+      // Handle error
+      print('Signup failed: ${response.statusCode} ${response.body}');
     }
   }
 }

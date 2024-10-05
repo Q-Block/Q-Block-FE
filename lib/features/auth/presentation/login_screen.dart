@@ -26,30 +26,38 @@ class _LogInScreenState extends State<LogInScreen> {
     return email == hardcodedEmail && password == hardcodedPassword;
   }
 
-  void _onLoginPressed() {
+  void _onLoginPressed() async {
+    print('Login button pressed'); // Add this
+
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    if (_login(email, password)) {
-      // Login successful
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    } else {
-      // Show AuthDialog for login error
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AuthDialog(
-            title: '로그인 오류',
-            content: '아이디 또는 비밀번호가 올바르지 않습니다.',
-            onConfirm: () {
+    try {
+      final isSuccess = await AuthService().login(email, password);
+      print('Login response: $isSuccess'); // Add this
 
-            },
-          );
-        },
-      );
+      if (isSuccess) {
+        // Login successful, navigate to HomeScreen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      } else {
+        // Show AuthDialog for login error
+        print('Showing login error dialog'); // Add this
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AuthDialog(
+              title: '로그인 오류',
+              content: '아이디 또는 비밀번호가 올바르지 않습니다.',
+              onConfirm: () {},
+            );
+          },
+        );
+      }
+    } catch (error) {
+      print('Login error: $error');
     }
   }
 
@@ -77,14 +85,15 @@ class _LogInScreenState extends State<LogInScreen> {
                 TextField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: "아이디",
+                    labelText: "이메일",
                     filled: true,
                     fillColor: const Color.fromRGBO(250, 250, 250, 0.7)
                         .withOpacity(0.2),
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -115,7 +124,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.redAccent),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -157,7 +167,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const SignupScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignupScreen()),
                         );
                       },
                       child: const Text(
