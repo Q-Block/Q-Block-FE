@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:qblock_fe/features/detect/domain/url_processing_sevice.dart';
 import '../../../widgets/detection_dialog.dart';
 import '../../../widgets/image_picker.dart';
 import '../../../widgets/navigationbar.dart';
@@ -20,13 +21,14 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
   final TextRecognizer _textRecognizer = TextRecognizer(); // 텍스트 인식기
 
   // URL 추출을 위한 정규식 패턴
-  final String urlPattern = r'(https?:\/\/[^\s]+)';
+  final String urlPattern = r'((https?:\/\/[^\s]+)|(www\.[^\s]+))';
 
   // 이미지를 선택한 후 텍스트 인식 (OCR) 실행 및 URL만 추출
   Future<void> _processImageForTextRecognition(File image) async {
     try {
       final inputImage = InputImage.fromFile(image);
-      final RecognizedText recognizedText = await _textRecognizer.processImage(inputImage);
+      final RecognizedText recognizedText =
+          await _textRecognizer.processImage(inputImage);
 
       // 인식된 텍스트가 존재하는지 확인
       if (recognizedText.text.isNotEmpty) {
@@ -34,22 +36,29 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
 
         // URL을 추출하는 기존 코드
         final RegExp regExp = RegExp(urlPattern);
-        final Iterable<RegExpMatch> matches = regExp.allMatches(recognizedText.text);
+        final Iterable<RegExpMatch> matches =
+            regExp.allMatches(recognizedText.text);
+
+        final response =
+            await UrlProcessingService().processUrl(recognizedText.text, false);
 
         if (matches.isNotEmpty) {
-          final List<String> urls = matches.map((match) => match.group(0) ?? '').toList();
+          final List<String> urls =
+              matches.map((match) => match.group(0) ?? '').toList();
           setState(() {
             _textController.text = urls.isNotEmpty ? urls.first : '';
           });
         } else {
-          if (mounted) {  // mounted 체크 추가
+          if (mounted) {
+            // mounted 체크 추가
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("URL을 인식하지 못했습니다.")),
             );
           }
         }
       } else {
-        if (mounted) {  // mounted 체크 추가
+        if (mounted) {
+          // mounted 체크 추가
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("텍스트를 인식하지 못했습니다.")),
           );
@@ -57,15 +66,14 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
       }
     } catch (e) {
       print("텍스트 인식 오류: $e");
-      if (mounted) {  // mounted 체크 추가
+      if (mounted) {
+        // mounted 체크 추가
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("텍스트 인식 중 오류가 발생했습니다.")),
         );
       }
     }
   }
-
-
 
   Future<void> showImagePickerOptions() async {
     showCupertinoModalPopup(
@@ -109,6 +117,26 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
     );
   }
 
+  Future<void> _detectUrl() async {
+    String enteredUrl = _textController.text;
+    if (!enteredUrl.startsWith('http://') &&
+        !enteredUrl.startsWith('https://')) {
+      enteredUrl = 'https://$enteredUrl'; // Prepend 'https://'
+    }
+    if (enteredUrl.isNotEmpty) {
+      // Process the URL entered manually
+      final response =
+          await UrlProcessingService().processUrl(enteredUrl, false);
+
+      // Show detection dialog with the entered URL
+      DetectionDialogs.showDetectionDialog(context, enteredUrl);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("URL을 입력해주세요.")),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _textRecognizer.close(); // 텍스트 인식기 해제
@@ -142,7 +170,7 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
                         fillColor: const Color.fromRGBO(250, 250, 250, 0.7)
                             .withOpacity(0.2),
                         labelStyle:
-                        TextStyle(color: Colors.black.withOpacity(0.6)),
+                            TextStyle(color: Colors.black.withOpacity(0.6)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
@@ -186,13 +214,7 @@ class _UrlDetectionScreenState extends State<UrlDetectionScreen> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                   ),
-                  onPressed: () {
-                    // Show detection dialog when "탐지하기" button is pressed
-                    DetectionDialogs.showDetectionDialog(
-                      context,
-                      _textController.text,
-                    );
-                  },
+                  onPressed: _detectUrl,
                   child: const Text(
                     "탐지하기",
                     style: TextStyle(fontSize: 16),

@@ -5,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qblock_fe/widgets/detection_dialog_qr.dart';
 import 'package:qblock_fe/widgets/navigationbar.dart';
 import 'package:qblock_fe/widgets/textbutton.dart';
+import 'package:qblock_fe/features/detect/domain/url_processing_sevice.dart';
 
 class QrDetectionScreen extends StatefulWidget {
   const QrDetectionScreen({super.key});
@@ -51,6 +52,12 @@ class _ScanQRCodeState extends State<QrDetectionScreen> {
               qrCode; // Update the TextEditingController to show the scanned result
         }
       });
+      final response = await UrlProcessingService().processUrl(qrCode, true);
+      if (response != null) {
+        print('$response');
+      } else {
+        print("Error Processing URL");
+      }
     } on PlatformException catch (e) {
       setState(() {
         qrResult = 'Failed to scan QR Code: ${e.message}';
@@ -62,13 +69,6 @@ class _ScanQRCodeState extends State<QrDetectionScreen> {
         urlController.text = ''; // Clear the TextField on error
       });
     }
-  }
-
-  void openLink(String url) {
-    // Implement the logic to open the URL
-    // For example, using url_launcher:
-    // launch(url);
-    print('Opening URL: $url'); // Placeholder for URL opening logic
   }
 
   @override
@@ -106,7 +106,7 @@ class _ScanQRCodeState extends State<QrDetectionScreen> {
               SizedBox(
                 width: double.infinity, // Set the desired width
                 child: CustomTextButton(
-                  label: ' 탐지하기  ',
+                  label: ' qr코드 탐지하기  ',
                   onPressed: scanQR,
                   backgroundColor: Colors.green,
                   pressedBackgroundColor: Colors.white,

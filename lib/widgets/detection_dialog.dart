@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:qblock_fe/features/detect/domain/url_processing_sevice.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-Future<Map<String, dynamic>> fetchUrlData(String url) async {
-  await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
-
-  // Simulate a response
-  bool isMalicious = url.contains("malicious");
-
-  return {
-    'url': url,
-    'isMalicious': true, // Update to use the simulated value
-  };
-}
 
 class DetectionDialogs {
   static void showDetectionDialog(BuildContext context, String url) async {
     try {
-      Map<String, dynamic> urlData = await fetchUrlData(url);
+      UrlProcessingService urlProcessingService = UrlProcessingService();
+      Map<String, dynamic>? urlData =
+          await urlProcessingService.processUrl(url, false);
+
+      if (urlData == null) {
+        // Handle the case when URL data is null (e.g., no token or an error occurred)
+        print('URL data is null.');
+        return;
+      }
 
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          bool isMalicious = urlData['isMalicious'] ?? false;
-          String message = isMalicious ? "악성 URL로 의심됩니다" : "악성 URL이 아닙니다";
+          bool isMalicious = urlData['malicious_status'] == '악성';
+          String message = isMalicious ? "악성 URL로 의심됩니다" : "정상 URL입니다.";
 
           return AlertDialog(
             title: Text(
@@ -59,9 +56,15 @@ class DetectionDialogs {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
-                          showConnectionWarningDialog(
-                              context, isMalicious, url);
+                          if (isMalicious) {
+                            // Show the connection warning dialog if the URL is malicious
+                            Navigator.pop(context); // Close the current dialog
+                            showConnectionWarningDialog(
+                                context, isMalicious, url);
+                          } else {
+                            // Launch the URL directly if it is not malicious
+                            DetectionDialogs.launchUrlIfPossible(url);
+                          }
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -78,15 +81,7 @@ class DetectionDialogs {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          if (isMalicious) {
-                            // Show the connection warning dialog if the URL is malicious
-                            Navigator.pop(context); // Close the current dialog
-                            showConnectionWarningDialog(
-                                context, isMalicious, url);
-                          } else {
-                            // Launch the URL directly if it is not malicious
-                            DetectionDialogs.launchUrlIfPossible(url);
-                          }
+                          Navigator.of(context).pop();
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.black,

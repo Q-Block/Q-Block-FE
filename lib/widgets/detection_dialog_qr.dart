@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:qblock_fe/features/detect/domain/url_processing_sevice.dart';
+/*
 Future<Map<String, dynamic>> fetchUrlData(String url) async {
   await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
 
@@ -12,18 +13,27 @@ Future<Map<String, dynamic>> fetchUrlData(String url) async {
     'isMalicious': true, // Update to use the simulated value
   };
 }
+*/
 
 class DetectionDialogs {
   static void showDetectionDialog(
       BuildContext context, String url, VoidCallback onScanAgain) async {
     try {
-      Map<String, dynamic> urlData = await fetchUrlData(url);
+      UrlProcessingService urlProcessingService = UrlProcessingService();
+      Map<String, dynamic>? urlData =
+          await urlProcessingService.processUrl(url, true);
+
+      if (urlData == null) {
+        // Handle the case when URL data is null (e.g., no token or an error occurred)
+        print('URL data is null.');
+        return;
+      }
 
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          bool isMalicious = urlData['isMalicious'] ?? false;
-          String message = isMalicious ? "악성 URL로 의심됩니다" : "악성 URL이 아닙니다";
+          bool isMalicious = urlData['malicious_status'] == '악성';
+          String message = isMalicious ? "악성 URL로 의심됩니다" : "정상 URL입니다.";
 
           return AlertDialog(
             title: Text(
@@ -36,7 +46,7 @@ class DetectionDialogs {
               children: [
                 const SizedBox(height: 10),
                 Text(
-                  'URL: $url',
+                  'URL: ${urlData['url']}',
                   style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 10),
