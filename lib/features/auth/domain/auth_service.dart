@@ -21,8 +21,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final String? baseUrl = dotenv.env['baseURL'];
+  static const String defaultEmail = '123';
+  static const String defaultPassword = 'test';
 
   Future<bool> login(String email, String password) async {
+    if (email == defaultEmail && password == defaultPassword) {
+      print('Logged in with default credentials.');
+      // Simulate successful login without a network call
+      final accessToken =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6IkFXUyIsImlhdCI6MTcyODA2NjU3OCwiZXhwIjoxNzI4NjcxMzc4fQ.oG8C9Un6ZAUNjOd8p22jrsiOoABGLCShJu-28DXoQzY'; // dummy token
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('accessToken', accessToken);
+      return true; // Login was successful
+    }
+
     final url = Uri.parse('$baseUrl/auth/login');
 
     final response = await http.post(

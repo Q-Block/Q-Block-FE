@@ -17,24 +17,15 @@ class _LogInScreenState extends State<LogInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // Placeholder method to simulate login
-  bool _login(String email, String password) {
-    // Replace this logic with your server request when ready
-    const hardcodedEmail = '123';
-    const hardcodedPassword = 'test';
-
-    return email == hardcodedEmail && password == hardcodedPassword;
-  }
-
   void _onLoginPressed() async {
-    print('Login button pressed'); // Add this
+    print('Login button pressed');
 
     final email = _emailController.text;
     final password = _passwordController.text;
 
     try {
       final isSuccess = await AuthService().login(email, password);
-      print('Login response: $isSuccess'); // Add this
+      print('Login response: $isSuccess');
 
       if (isSuccess) {
         // Login successful, navigate to HomeScreen
@@ -44,20 +35,34 @@ class _LogInScreenState extends State<LogInScreen> {
         );
       } else {
         // Show AuthDialog for login error
-        print('Showing login error dialog'); // Add this
+        print('Showing login error dialog');
         showDialog(
           context: context,
           builder: (context) {
             return AuthDialog(
               title: '로그인 오류',
               content: '아이디 또는 비밀번호가 올바르지 않습니다.',
-              onConfirm: () {},
+              onConfirm: () {
+                // Action to perform when the confirm button is pressed
+                print('Confirm button pressed');
+              },
             );
           },
         );
       }
     } catch (error) {
       print('Login error: $error');
+      // You can show another dialog here for unexpected errors
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AuthDialog(
+            title: '로그인 실패',
+            content: '로그인할 수 없습니다. 다시 시도해 주세요.',
+            onConfirm: () {},
+          );
+        },
+      );
     }
   }
 
