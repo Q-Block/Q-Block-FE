@@ -1,13 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NicknameChangeService {
-  // 하드코딩된 토큰을 이곳에 추가
-  final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJlbWFpbCI6IkFXUyIsImlhdCI6MTcyODA2NjU3OCwiZXhwIjoxNzI4NjcxMzc4fQ.oG8C9Un6ZAUNjOd8p22jrsiOoABGLCShJu-28DXoQzY"; // 실제 액세스 토큰으로 교체
-
+  // Function to change the user's nickname
   Future<Map<String, dynamic>> changeNickname(String newNickname) async {
     final url = Uri.parse('http://52.79.170.78:3000/users/info/nickname');
 
+    // Retrieve the token from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('accessToken');
+
+    if (token == null) {
+      throw Exception('No access token found. Please log in again.');
+    }
     final response = await http.patch(
       url,
       headers: {
