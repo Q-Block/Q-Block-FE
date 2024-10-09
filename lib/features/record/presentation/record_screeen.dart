@@ -111,7 +111,7 @@ Widget _buildRecordItem(
     required String url,
     required String type}) {
   // qr_status 에 따라 표시할 이미지 선택
-  String displayImagePath = (type == '0')
+  String displayImagePath = (type == '1')
       ? 'assets/images/record_qr.png' // QR 이미지 경로
       : 'assets/images/record_url.png'; // URL 이미지 경로
 
