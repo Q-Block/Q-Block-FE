@@ -44,7 +44,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
           // Check if the URLs are the same and the time difference is less than 1 second
           if (url == uniqueUrl &&
-              createdAt.difference(uniqueCreatedAt).inMilliseconds.abs() <
+              createdAt.difference(uniqueCreatedAt).inMilliseconds.abs() <=
                   2000) {
             isUnique = false; // Mark as not unique
             break; // No need to check further
@@ -94,10 +94,10 @@ class _RecordScreenState extends State<RecordScreen> {
                 itemBuilder: (context, index) {
                   final record = records[index];
                   return _buildRecordItem(
-                    dateTime: record['created_at'],
-                    urlAssessment: record['qr_status'].toString(),
-                    url: record['url'],
-                  );
+                      dateTime: record['created_at'],
+                      type: record['qr_status'].toString(),
+                      url: record['url'],
+                      urlAssessment: record['malicious_status'].toString());
                 },
               ),
       ),
@@ -105,13 +105,13 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 }
 
-Widget _buildRecordItem({
-  required String dateTime,
-  required String urlAssessment,
-  required String url,
-}) {
+Widget _buildRecordItem(
+    {required String dateTime,
+    required String urlAssessment,
+    required String url,
+    required String type}) {
   // qr_status 에 따라 표시할 이미지 선택
-  String displayImagePath = (urlAssessment == '0')
+  String displayImagePath = (type == '0')
       ? 'assets/images/record_qr.png' // QR 이미지 경로
       : 'assets/images/record_url.png'; // URL 이미지 경로
 
